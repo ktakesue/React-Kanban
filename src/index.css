@@ -3,3 +3,49 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/* .column-container {
+  display: inline-block;
+  justify-content: space-between;
+  width: 97%;
+  min-height: 600px;
+}
+
+.column-lists {
+  height: 100%;
+  text-align: center;
+  display: inline-block;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 0px;
+  max-height: 100%;
+  margin: 0 5px 0 5px;
+  font-size: 14px;
+  transition: box-shadow 0.15s, background 0.3s;
+} */
+
+.addForm {
+  margin: 10px;
+  text-align: center
+}
+
+.card-component:hover {
+  background-color: yellow;
+}
+
+.card-component {
+  background-color: lightgoldenrodyellow;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 2px 2px 5px #755959;
+}
+
+.card-title {
+  text-align: start;
+}
+
+.card-details {
+  font-size: 12px;
+  text-align: start;
+  padding: 10px;
+}
