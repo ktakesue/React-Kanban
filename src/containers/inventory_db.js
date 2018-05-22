@@ -29,27 +29,21 @@ let newId = 4;
 
 export const getCards = () =>
   new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(cardsDB.slice());
-    });
+    resolve(cardsDB.slice());
   });
 
 export const addCardtoDB = card =>
   new Promise((resolve, reject) => {
-    setTimeout(() => {
-      card.id = newId;
-      newId++;
-      cardsDB.push(card);
-      console.log("cardDB", cardsDB);
-      resolve(cardsDB);
-    });
+    card.id = newId;
+    newId++;
+    cardsDB.push(card);
+    console.log("cardDB", cardsDB);
+    resolve(cardsDB);
   });
 
 export const getCardById = cardId =>
   new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const cardResponse = cardsDB.find(card => card.id === cardId);
-      if (cardResponse) resolve(cardResponse);
-      else reject({ status: 404, message: "item not found" });
-    });
+    const cardResponse = cardsDB.find(card => card.id === cardId);
+    if (cardResponse) resolve(cardResponse);
+    else reject({ status: 404, message: "item not found" });
   });

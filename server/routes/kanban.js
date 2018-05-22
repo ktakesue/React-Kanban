@@ -66,7 +66,7 @@ router
       });
   })
   .delete((req, res) => {
-    console.log("delete photo by id");
+    console.log("delete card by id");
     const id = req.params.id;
     return Card.where({ id })
       .destroy()

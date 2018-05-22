@@ -1,22 +1,46 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./App.css";
 import Header from "./components/Header.js";
 import Columns from "./components/Columns.js";
-import AddCard from "./containers/AddCard.js";
-import { addCardtoDB } from "./containers/inventory_db.js";
+import AddCardForm from "./containers/AddCardForm.js";
+// import { addCardtoDB, getCards } from "./containers/inventory_db.js";
+import { loadCards, addCard } from "./actions/actions.js";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import reducers from "./reducers";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: []
+      cards: [
+        {
+          id: "",
+          title: "",
+          priority: "",
+          status: "",
+          createdBy: "",
+          assignedTo: ""
+        }
+      ]
     };
     this.addCard = this.addCard.bind(this);
   }
 
+  // componentDidMount() {
+  //   loadCards().then(cards => {
+  //     this.setState({ cards }, () => {
+  //       console.log("this.state", this.state);
+  //     });
+  //   });
+  // }
+
+  componentWillMount() {
+    this.props.loadCards();
+  }
+
   addCard(card) {
-    addCardtoDB(card).then(cards => {
+    addCard(card).then(cards => {
       this.setState({ cards });
     });
   }
@@ -24,23 +48,40 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="main">
+        <div>
           <Header />
-          <AddCard addCard={this.addCard} />
-          {/* <div className="column-container"> */}
-          {/* <div className="column-lists"> */}
-          <h1 className="column-title"> Queue: </h1>
-          <Columns />
-          <h1 className="column-title"> In-Progress: </h1>
-          <Columns />
-          <h1 className="column-title"> Done: </h1>
-          <Columns />
+          <AddCardForm addCard={this.addCard} />
+          <div className="row">
+            {/* <h1 className="column-title"> Queue: </h1> */}
+            <Columns cards={this.props.cards} />
+            {/* <h1 className="column-title"> In-Progress: </h1> */}
+            <Columns cards={this.props.cards} />
+            {/* <h1 className="column-title"> Done: </h1> */}
+            <Columns cards={this.props.cards} />
+          </div>
         </div>
-        {/* </div> */}
-        {/* </div> */}
       </Router>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  //goes to the reducer
+  return {
+    cards: state.cardReducer.cards // calls reducer inital state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  //second argument is getState
+  return {
+    loadCards: () => {
+      //set to props above
+      dispatch(loadCards()); //calling from action
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// export default App;

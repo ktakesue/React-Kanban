@@ -4,10 +4,12 @@ export const ADD_CARD = "ADD_CARD";
 export const DELETE_CARD = "DELETE_CARD";
 export const EDIT_CARD = "EDIT_CARD";
 
+const HOST = "http://localhost:8080";
+
 export const loadCards = () => {
   return dispatch => {
     axios
-      .get(`/kanban`)
+      .get(`${HOST}`)
       .then(result => {
         return result.data;
       })
@@ -27,8 +29,8 @@ export const loadCards = () => {
 export const addCard = card => {
   console.log("adding a CARD", card);
   return dispatch => {
-    return axios
-      .post(`/kanban`, card)
+    axios
+      .post(`${HOST}`, card)
       .then(result => {
         dispatch(loadCards());
       })
@@ -41,7 +43,7 @@ export const addCard = card => {
 export const deleteCard = id => {
   return dispatch => {
     axios
-      .delete(`/kanban/:id`, id)
+      .delete(`${HOST}/:id`, id)
       .then(data => {
         dispatch(loadCards());
       })
@@ -54,7 +56,7 @@ export const deleteCard = id => {
 export const editCard = id => {
   return dispatch => {
     axios
-      .put(`/kanban/:id`, id)
+      .put(`${HOST}/:id`, id)
       .then(result => {
         dispatch(editCard());
       })
